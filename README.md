@@ -38,7 +38,7 @@ How to View My Resume
 
 You can view my interactive resume live online via GitHub Pages:
 
-https://Newtothisthing90.github.io/My_Resume
+https://newtothisthing90.github.io/My_Resume/
 Contact Me
 
 I'm always open to new opportunities and discussions! Feel free to reach out using the contact information below:
