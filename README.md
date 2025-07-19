@@ -1,7 +1,3 @@
-# My_Resume
-My_Resume
-
-
 My Interactive Resume
 
 Hello! Welcome to the repository for my interactive online resume. I built this project to showcase my skills and experience in a dynamic and engaging way, going beyond a traditional static document. I believe it offers a more comprehensive and interactive experience for anyone interested in learning about my background in Computer Science.
@@ -42,8 +38,7 @@ How to View My Resume
 
 You can view my interactive resume live online via GitHub Pages:
 
-https://yourusername.github.io/your-repo-name
-(Replace yourusername with my GitHub username and your-repo-name with the repository name if it's not yourusername.github.io)
+https://Newtothisthing90.github.io/My_Resume
 Contact Me
 
 I'm always open to new opportunities and discussions! Feel free to reach out using the contact information below:
