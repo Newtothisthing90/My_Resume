@@ -1169,8 +1169,8 @@
 
     <!-- Chatbot Floating Action Button (FAB): My interactive AI assistant. -->
     <button id="chatbot-fab" class="chatbot-fab">
-        <!-- Using a generic chat icon for the FAB. -->
-        <i class="fas fa-comment-dots"></i>
+        <!-- I'm using 'Pic1.jpg' for the chat bubble icon. -->
+        <img src="uploaded:Pic1.jpg-614336f7-df87-46f0-9ccf-8839a92dc3eb" alt="Chatbot icon" class="w-full h-full object-contain">
     </button>
 
     <!-- Chatbot Window: The main interface for the chatbot. -->
@@ -1184,8 +1184,8 @@
         <div class="chatbot-messages" id="chatbot-messages">
             <!-- Initial welcome message from the bot, with my profile picture. -->
             <div class="chatbot-message-container bot">
-                <!-- My profile picture for the chatbot. I'm using the uploaded 'image_5f2503.png' here. -->
-                <img src="uploaded:image_5f2503.png-02f9abd8-8640-44ba-9992-4245037a9e33" alt="Lawrence's profile picture" class="chatbot-profile-pic">
+                <!-- My profile picture for the chatbot. I'm using 'Pic2.jpg' here. -->
+                <img src="uploaded:Pic2.jpg-614336f7-df87-46f0-9ccf-8839a92dc3eb" alt="Lawrence's profile picture" class="chatbot-profile-pic">
                 <div class="chatbot-message">Hello! I'm Lawrence. I'm excited to share my resume with you! While the main page covers my professional skills, I've got more to share if you're curious. Feel free to ask me anything about my personal insights, hobbies, or even my family life – let's make it a fun puzzle!</div>
             </div>
         </div>
@@ -1585,8 +1585,8 @@
                 const messageContainer = document.createElement('div');
                 messageContainer.classList.add('chatbot-message-container', sender);
 
-                // My profile picture for the chatbot. I'm using the uploaded 'image_5f2503.png' here.
-                const botProfilePicUrl = "uploaded:image_5f2503.png-02f9abd8-8640-44ba-9992-4245037a9e33";
+                // My profile picture for the chatbot. I'm using the uploaded 'Pic2.jpg' here.
+                const botProfilePicUrl = "uploaded:Pic2.jpg-614336f7-df87-46f0-9ccf-8839a92dc3eb";
 
                 if (sender === 'bot') {
                     const profilePic = document.createElement('img');
