@@ -1,24 +1,16 @@
-I understand. You want to replace the custom image paths with stock/placeholder content directly in the HTML.
-
-Here's your code with the requested changes. I've located the two `<img>` tags for the chatbot and profile picture and replaced them:
-
-1.  **Chatbot Icon (Line \~1172):** Replaced `<img src="/api/images/Pic1.jpg" ...>` with a simple speech bubble emoji `<span>💬</span>`.
-2.  **Profile Picture (Line \~1199):** Replaced `<img src="/api/images/Pic2.jpg?d=..." ...>` with a placeholder image from `https://via.placeholder.com/` which shows "LW" (for Lawrence) on a 48x48 pixel gray background.
-
-<!-- end list -->
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lawrence Langelier Jr. - Interactive Resume</title>
+    <!-- Tailwind CSS CDN: I'm using Tailwind CSS for rapid and responsive styling. It helps me build modern UIs quickly. -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN for Icons: I love using Font Awesome for clear, scalable icons throughout the resume. They add a nice visual touch! -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* CSS Variables for consistent theming: I define these variables to ensure a consistent dark theme across the entire resume.
-            It makes it easy to change colors globally if I ever want to refresh the look. */
+           It makes it easy to change colors globally if I ever want to refresh the look. */
         :root {
             --bg-dark: #1a202c;
             --bg-medium: #2d3748;
@@ -45,7 +37,7 @@ Here's your code with the requested changes. I've located the two `<img>` tags f
         }
 
         /* Keyframe Animation for Dynamic Background Gradient Shift: I added this to create a subtle, ever-shifting background.
-            It keeps the page feeling alive without being distracting. */
+           It keeps the page feeling alive without being distracting. */
         @keyframes dynamicGradientShift {
             0% { background-position: 0% 0%; }
             25% { background-position: 100% 0%; }
@@ -710,625 +702,1113 @@ Here's your code with the requested changes. I've located the two `<img>` tags f
         .chatbot-typing-indicator {
             align-self: flex-start;
             font-size: 0.8rem;
-            /* The ellipsis animation would go here, often dots that appear/disappear */
-            color: var(--gray-400);
-            padding-left: 0.5rem;
-            font-style: italic;
+            color: var(--gray-400); /* Changed to text-light for better visibility. */
+            padding: 0.3rem 0.6rem;
+            margin-top: 0.5rem;
+            animation: fadeAndPulse 1.5s infinite ease-in-out;
         }
 
-        /* Typing Dots Animation: These dots create the "..." effect. */
-        .chatbot-typing-indicator span {
-            opacity: 0;
-            animation: fadeInOut 1s infinite;
-        }
-        .chatbot-typing-indicator span:nth-child(1) { animation-delay: 0s; }
-        .chatbot-typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .chatbot-typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0; }
+        @keyframes fadeAndPulse {
+            0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
         }
 
-        /* Responsive adjustments for smaller screens: I ensure the resume looks good on various devices. */
+        /* Responsive adjustments for chatbot: Makes the chatbot window adapt to smaller screens. */
         @media (max-width: 768px) {
-            .main-container {
-                width: 95%; /* Wider on small screens. */
-                margin: 0 auto;
-                padding: 1rem;
-            }
-            .collapsible-header h2 {
-                font-size: 1.25rem; /* Adjust header font size. */
-            }
-            .collapsible-content {
-                padding: 0 1rem;
-            }
-            .collapsible-content.active {
-                padding: 1rem;
-            }
-            .code-block {
-                padding: 1rem;
-                font-size: 0.9rem;
-            }
-            .calendar-grid {
-                grid-template-columns: 50px repeat(7, 1fr); /* Adjust column width for time labels. */
-                font-size: 0.7rem;
-            }
-            .calendar-cell {
-                min-height: 25px; /* Smaller cells. */
-                padding: 0.3rem 0.1rem;
-            }
-            .chatbot-window {
-                width: 90%; /* Wider on small screens. */
-                right: 5%;
-                bottom: 80px;
-                left: 5%; /* Center it horizontally. */
-                height: 400px;
-                transform-origin: bottom center; /* Adjust origin for centering. */
-            }
             .chatbot-fab {
-                right: 1rem;
-                bottom: 1rem;
                 width: 50px;
                 height: 50px;
                 font-size: 1.5rem;
+                bottom: 1rem;
+                right: 1rem;
             }
+            .chatbot-window {
+                width: 90%;
+                height: 70%;
+                bottom: 1rem;
+                right: 5%;
+                left: 5%;
+                max-width: none; /* Removes max-width constraint. */
+            }
+            .chatbot-messages {
+                padding: 0.75rem;
+            }
+            .chatbot-message {
+                font-size: 0.85rem;
+            }
+            .chatbot-input-area {
+                padding: 0.5rem 0.75rem;
+            }
+            .chatbot-input-area input, .chatbot-input-area button {
+                padding: 0.5rem 0.8rem;
+            }
+        }
+
+        /* Project Demo Specific Styles: Styles for the interactive mini-demos within project sections. */
+        .project-demo-container {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--code-block-border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        /* Input fields within project demos. */
+        .project-demo-input {
+            background-color: #1a202c; /* Even darker for input. */
+            border: 1px solid var(--accent-teal-dark);
+            color: var(--text-light);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            margin-bottom: 0.75rem;
+            outline: none;
+        }
+        /* Focus state for project demo input. */
+        .project-demo-input:focus {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 2px rgba(var(--accent-teal-rgb), 0.3);
+        }
+        /* Buttons within project demos. */
+        .project-demo-button {
+            background-color: var(--accent-blue);
+            color: var(--bg-dark);
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            font-weight: bold;
+        }
+        /* Hover state for project demo buttons. */
+        .project-demo-button:hover {
+            background-color: var(--accent-teal);
+            transform: translateY(-1px);
+        }
+        /* Output area for project demos. */
+        .project-demo-output {
+            background-color: var(--code-block-bg);
+            border: 1px solid var(--code-block-border);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            min-height: 50px;
+            color: var(--text-light);
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        /* Loading state for the fun fact generator output. */
+        .fun-fact-output.loading {
+            color: var(--gray-400);
+            text-align: center;
+        }
+
+        /* New styles for collapsible project headers: These are nested collapsible sections for individual projects. */
+        .project-collapsible-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem; /* Slightly less padding than main headers. */
+            background-color: var(--bg-light); /* Slightly lighter background for project headers. */
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hover state for project collapsible headers. */
+        .project-collapsible-header:hover {
+            background-color: var(--bg-medium);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Project title styling within collapsible headers. */
+        .project-collapsible-header h3 {
+            font-size: 1.1rem; /* Adjusts font size for project titles. */
+            color: var(--accent-blue);
+            margin: 0; /* Removes default margin from h3. */
+        }
+
+        /* Collapsible content for projects. */
+        .project-collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-out, padding 0.7s ease-out;
+            padding: 0 0.5rem; /* Initial padding when collapsed. */
+        }
+
+        /* Active state for project collapsible content. */
+        .project-collapsible-content.active {
+            max-height: 1200px; /* Sufficiently large for project content + demo. */
+            padding: 0.75rem 0.5rem; /* Padding when active. */
+        }
+        /* Arrow icon within project headers. */
+        .project-collapsible-header .arrow {
+            font-size: 1rem; /* Smaller arrow for project headers. */
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200">
-    <main class="main-container-animated max-w-4xl mx-auto bg-gray-800 p-8 rounded-xl shadow-2xl relative z-10">
-        <div class="absolute top-4 right-4 flex items-center space-x-2 z-20">
-            <span class="text-gray-400 text-sm">RGB</span>
-            <label for="rgb-toggle" class="relative inline-flex items-center cursor-pointer">
-                <input type="checkbox" id="rgb-toggle" class="sr-only peer" checked>
-                <div class="w-11 h-6 bg-gray-600 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-            </label>
-        </div>
-
-        <header class="text-center mb-8 relative">
-            <h1 class="header-name text-5xl font-extrabold mb-4 animate-rainbowText">Lawrence Langelier Jr.</h1>
-            <p class="text-lg text-gray-400">
-                <span id="typewriter-output" class="typewriter-text"></span>
+<body class="p-4 md:p-8">
+    <!-- Main Container: This div holds all the resume content and applies the initial fade-in animation. -->
+    <div class="max-w-4xl mx-auto bg-gray-800 shadow-lg rounded-lg p-6 md:p-8 main-container-animated">
+        <!-- Header Section: My name and contact information. -->
+        <header class="text-center mb-8">
+            <!-- My name, with a dynamic rainbow text effect by default. -->
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-400 mb-2 header-name">Lawrence Langelier Jr.</h1>
+            <!-- My contact details, designed to be easily copyable. -->
+            <p class="text-lg md:text-xl text-gray-400 flex flex-wrap justify-center items-center gap-y-2">
+                <span class="flex items-center">
+                    <a href="mailto:Lj.langelier@icloud.com" class="hover:underline" id="email-link">Lj.langelier@icloud.com</a>
+                    <!-- Copy button for email. -->
+                    <button class="copy-button" data-clipboard-target="email-link" aria-label="Copy email to clipboard"><i class="fas fa-copy"></i>Copy</button>
+                </span>
+                <span class="mx-2 hidden md:inline">|</span> <!-- Separator for desktop. -->
+                <span class="flex items-center">
+                    207-576-1359
+                    <!-- Copy button for phone number. -->
+                    <button class="copy-button" data-clipboard-target="phone-number" aria-label="Copy phone number to clipboard" id="phone-number-btn"><i class="fas fa-copy"></i>Copy</button>
+                </span>
+                <span class="mx-2 hidden md:inline">|</span> <!-- Separator for desktop. -->
+                <span class="flex items-center">
+                    <a href="https://github.com/Newtothisthing90" target="_blank" class="hover:underline" id="github-link">github.com/Newtothisthing90</a>
+                    <!-- Copy button for GitHub URL. -->
+                    <button class="copy-button" data-clipboard-target="github-link" aria-label="Copy GitHub URL to clipboard"><i class="fas fa-copy"></i>Copy</button>
+                </span>
             </p>
-            <div class="mt-4 flex flex-wrap justify-center items-center text-sm text-gray-400">
-                <p class="mr-4 flex items-center">
-                    <i class="fas fa-envelope mr-2 text-accent-teal"></i>
-                    <span id="email-address">Lawrence.Langelier.Jr@gmail.com</span>
-                    <button class="copy-button" onclick="copyToClipboard('email-address', this)">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                </p>
-                <p class="flex items-center">
-                    <i class="fas fa-phone mr-2 text-accent-teal"></i>
-                    <span id="phone-number">(207)-877-6238</span>
-                    <button class="copy-button" onclick="copyToClipboard('phone-number', this)">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                </p>
-                <p class="ml-4 flex items-center">
-                    <i class="fas fa-map-marker-alt mr-2 text-accent-teal"></i> Gardiner, ME 04345
-                </p>
-            </div>
         </header>
 
+        <!-- Summary Section: A brief overview of my professional profile. -->
         <section class="mb-6">
-            <div class="collapsible-header" data-target="about-content">
-                <h2 class="text-2xl font-bold flex items-center">
-                    <i class="fas fa-user-circle mr-3 text-accent-blue"></i> About Me
-                </h2>
-                <i class="fas fa-chevron-right arrow"></i>
+            <!-- Collapsible header for the summary section. -->
+            <div class="collapsible-header" data-target="summary-content">
+                <h2 class="text-2xl font-semibold"><i class="fas fa-user-tie mr-3 text-blue-400"></i>Summary</h2>
+                <span class="arrow text-xl">&#9658;</span>
             </div>
-            <div id="about-content" class="collapsible-content">
-                <p class="text-gray-300 mb-4">
-                    I am a highly motivated and detail-oriented Software Development student with a strong passion for creating efficient, scalable, and user-friendly applications. My academic journey has equipped me with a robust foundation in programming principles, data structures, and algorithms. I thrive in collaborative environments and am constantly seeking opportunities to learn new technologies and improve my skill set.
+            <!-- Collapsible content for the summary. -->
+            <div id="summary-content" class="collapsible-content">
+                <p class="mb-4">
+                    <!-- The full summary text, which is animated with a typewriter effect. -->
+                    <span id="typewriter" class="typewriter-text">Highly enthusiastic and dedicated Computer Science student with a robust foundation in programming (Python, Java, C++, JavaScript) and a passion for technology. Seeking challenging opportunities in the computer science field to leverage strong analytical, communication, and problem-solving skills. Committed to continuous learning and contributing to innovative technical solutions.</span>
                 </p>
-                <p class="text-gray-300">
-                    My goal is to leverage my analytical skills and innovative mindset to contribute to impactful software solutions. I am eager to apply my theoretical knowledge to real-world challenges and grow as a versatile software developer.
-                </p>
-            </div>
-        </section>
-
-        <section class="mb-6">
-            <div class="collapsible-header" data-target="skills-content">
-                <h2 class="text-2xl font-bold flex items-center">
-                    <i class="fas fa-cogs mr-3 text-accent-blue"></i> Skills
-                </h2>
-                <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div id="skills-content" class="collapsible-content">
-                <div class="flex flex-wrap gap-2">
-                    <div class="skill-badge"><span class="emoji">💻</span> HTML/CSS/JavaScript</div>
-                    <div class="skill-badge"><span class="emoji">🚀</span> React.js</div>
-                    <div class="skill-badge"><span class="emoji">🐍</span> Python</div>
-                    <div class="skill-badge"><span class="emoji">🐘</span> PHP</div>
-                    <div class="skill-badge"><span class="emoji">🗄️</span> SQL</div>
-                    <div class="skill-badge"><span class="emoji">💽</span> MySQL</div>
-                    <div class="skill-badge"><span class="emoji">🍃</span> MongoDB</div>
-                    <div class="skill-badge"><span class="emoji">☁️</span> AWS (EC2, S3)</div>
-                    <div class="skill-badge"><span class="emoji">⚙️</span> Node.js</div>
-                    <div class="skill-badge"><span class="emoji">🌐</span> RESTful APIs</div>
-                    <div class="skill-badge"><span class="emoji">🤖</span> Git/GitHub</div>
-                    <div class="skill-badge"><span class="emoji">🧪</span> Unit Testing</div>
-                    <div class="skill-badge"><span class="emoji">📊</span> Data Structures</div>
-                    <div class="skill-badge"><span class="emoji">🧠</span> Algorithms</div>
-                    <div class="skill-badge"><span class="emoji">📈</span> Agile Methodologies</div>
-                    <div class="skill-badge"><span class="emoji">🎨</span> UI/UX Principles</div>
+                <!-- Button to toggle the RGB (rainbow) text animation. -->
+                <div class="flex items-center justify-center mt-4">
+                    <button id="rgb-toggle-btn" class="px-4 py-2 rounded-full bg-gray-700 text-white flex items-center space-x-2 transition-colors duration-300">
+                        <i class="fas fa-lightbulb"></i>
+                        <span id="rgb-toggle-text">RGB On</span>
+                    </button>
                 </div>
             </div>
         </section>
 
+        <!-- Education Section: Details about my academic background. -->
         <section class="mb-6">
+            <!-- Collapsible header for the education section. -->
             <div class="collapsible-header" data-target="education-content">
-                <h2 class="text-2xl font-bold flex items-center">
-                    <i class="fas fa-graduation-cap mr-3 text-accent-blue"></i> Education
-                </h2>
-                <i class="fas fa-chevron-right arrow"></i>
+                <h2 class="text-2xl font-semibold"><i class="fas fa-graduation-cap mr-3 text-blue-400"></i>Education</h2>
+                <span class="arrow text-xl">&#9658;</span>
             </div>
+            <!-- Collapsible content for education details. -->
             <div id="education-content" class="collapsible-content">
-                <div class="mb-6 p-4 rounded-lg bg-gray-700 shadow-md border border-gray-600">
-                    <h3 class="text-xl font-semibold text-accent-teal mb-2">University of Maine at Augusta</h3>
-                    <p class="text-gray-300 mb-1">Bachelor of Science in Software Development</p>
-                    <p class="text-gray-400 text-sm mb-3">Expected Graduation: May 2026</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="flex flex-col items-center">
-                            <div class="relative w-24 h-24 mb-2">
-                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
-                                    <circle class="text-gray-600" stroke-width="10" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60"/>
-                                    <circle id="credits-progress-circle" class="text-accent-teal glow" stroke-width="10" stroke-linecap="round" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60"
-                                            style="stroke-dasharray: 314.159; stroke-dashoffset: 314.159; --initial-offset: 314.159; --final-offset: calc(314.159 - (314.159 * 0.75)); animation: strokeDashoffset 2s ease-out forwards, glow 4s infinite ease-in-out;"></circle>
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span id="credits-percentage" class="text-xl font-bold text-accent-teal">75%</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 text-center">Credits Completed</p>
-                        </div>
-
-                        <div class="flex flex-col items-center">
-                            <div class="relative w-24 h-24 mb-2">
-                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
-                                    <circle class="text-gray-600" stroke-width="10" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60"/>
-                                    <circle id="gpa-progress-circle" class="text-purple-400 gpaGlow" stroke-width="10" stroke-linecap="round" stroke="currentColor" fill="transparent" r="50" cx="60" cy="60"
-                                            style="stroke-dasharray: 314.159; stroke-dashoffset: 314.159; --initial-offset: 314.159; --final-offset: calc(314.159 - (314.159 * 0.925)); animation: strokeDashoffset 2s ease-out forwards 0.5s, gpaGlow 4s infinite ease-in-out;"></circle>
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span id="gpa-value" class="text-xl font-bold text-purple-400">3.7/4.0</span>
-                                </div>
-                            </div>
-                            <p class="text-gray-300 text-center">Current GPA</p>
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-6 mb-6">
+                    <!-- Degree Completion Circular Progress Bar: Visualizes my progress towards my degree. -->
+                    <div class="relative w-32 h-32 md:w-40 md:h-40 flex-shrink-0">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <!-- Background circle for the progress bar. -->
+                            <circle
+                                class="text-gray-700"
+                                stroke-width="8"
+                                stroke="currentColor"
+                                fill="transparent"
+                                r="40"
+                                cx="50"
+                                cy="50"
+                            />
+                            <!-- Progress circle for degree completion. -->
+                            <circle
+                                class="text-teal-400 progress-circle-completion" /* Specific class for completion. */
+                                stroke-width="8"
+                                stroke-dasharray="251.2"
+                                stroke-dashoffset="251.2" /* Circumference of circle (2 * PI * R) = 2 * 3.14 * 40 = 251.2 */
+                                stroke-linecap="round"
+                                stroke="currentColor"
+                                fill="transparent"
+                                r="40"
+                                cx="50"
+                                cy="50"
+                                id="completion-progress-circle"
+                            />
+                        </svg>
+                        <!-- Text overlay for degree completion percentage. -->
+                        <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center">
+                            <span class="text-xl md:text-2xl font-bold text-teal-300" id="progress-percent">0%</span>
+                            <span class="text-sm md:text-base text-gray-400">Complete</span>
                         </div>
                     </div>
-                </div>
 
-                <h3 class="text-xl font-semibold text-accent-teal mb-2">Relevant Coursework:</h3>
-                <ul class="list-disc list-inside text-gray-300 pl-4 space-y-1">
-                    <li>Data Structures and Algorithms</li>
-                    <li>Object-Oriented Programming (Java, Python)</li>
-                    <li>Web Development (HTML, CSS, JavaScript, React)</li>
-                    <li>Database Management (SQL, MySQL, MongoDB)</li>
-                    <li>Software Engineering Principles</li>
-                    <li>Operating Systems</li>
-                    <li>Network Fundamentals</li>
-                </ul>
+                    <!-- GPA Circular Progress Bar: Visualizes my GPA. -->
+                    <div class="relative w-32 h-32 md:w-40 md:h-40 flex-shrink-0">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <!-- Background circle for GPA progress. -->
+                            <circle
+                                class="text-gray-700"
+                                stroke-width="8"
+                                stroke="currentColor"
+                                fill="transparent"
+                                r="40"
+                                cx="50"
+                                cy="50"
+                            />
+                            <!-- Progress circle for GPA. -->
+                            <circle
+                                class="progress-circle-gpa" /* Specific class for GPA. */
+                                stroke-width="8"
+                                stroke-dasharray="251.2"
+                                stroke-dashoffset="251.2"
+                                stroke-linecap="round"
+                                stroke="currentColor"
+                                fill="transparent"
+                                r="40"
+                                cx="50"
+                                cy="50"
+                                style="color: #a05aff;" /* Purple color for GPA. */
+                                id="gpa-progress-circle"
+                            />
+                        </svg>
+                        <!-- Text overlay for GPA display. -->
+                        <div class="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center">
+                            <span class="text-xl md:text-2xl font-bold text-purple-400" id="gpa-display">0.000</span>
+                            <span class="text-sm md:text-base text-gray-400">GPA</span>
+                        </div>
+                    </div>
+
+                    <!-- Education details: University, degree, and relevant coursework. -->
+                    <div class="flex-grow text-center md:text-left">
+                        <h3 class="text-xl font-medium text-blue-300">Southern New Hampshire University</h3>
+                        <p class="text-gray-400">Manchester, NH</p>
+                        <ul class="list-disc list-inside ml-4 mt-2 text-gray-300">
+                            <li>Bachelor of Science in Computer Science (65% complete)</li>
+                            <li>Cumulative GPA: 3.917</li>
+                        </ul>
+                        <h4 class="text-lg font-medium mt-4 text-blue-300">Relevant Coursework:</h4>
+                        <ul class="list-disc list-inside ml-4 text-gray-300">
+                            <li>Data Analytics (DAD 220)</li>
+                            <li>Introduction to AI Literacy</li>
+                            <li>Software Design</li>
+                            <li>Algorithms</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Button to manually trigger the education meter animations. I removed the text, the emoji is enough! -->
+                <div class="text-center mt-4">
+                    <button id="trigger-education-animation" class="project-demo-button inline-flex items-center px-6 py-3 text-lg">
+                        <span role="img" aria-label="Graduation Cap">🎓</span>
+                    </button>
+                </div>
             </div>
         </section>
 
+        <!-- Skills Section: My programming languages, technical, and professional skills. -->
         <section class="mb-6">
+            <!-- Collapsible header for the skills section. -->
+            <div class="collapsible-header" data-target="skills-content">
+                <h2 class="text-2xl font-semibold"><i class="fas fa-code mr-3 text-blue-400"></i>Skills</h2>
+                <span class="arrow text-xl">&#9658;</span>
+            </div>
+            <!-- Collapsible content for skills. -->
+            <div id="skills-content" class="collapsible-content">
+                <h3 class="text-xl font-medium text-blue-300 mb-2">Programming Languages:</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <!-- Skill badges for programming languages. -->
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Python">🐍</span>Python</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Java">☕</span>Java</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="C++">➕</span>C++</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="JavaScript">📜</span>JavaScript</span>
+                </div>
+                <h3 class="text-xl font-medium text-blue-300 mb-2">Technical Skills:</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <!-- Skill badges for technical skills. -->
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Data Analytics">📊</span>Data Analytics</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Software Design">📐</span>Software Design</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Algorithms">🧠</span>Algorithms</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Code Quality">✨</span>Code Quality</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Debugging">🐞</span>Debugging</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Problem Solving">💡</span>Problem Solving</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="File Handling">📁</span>File Handling</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="User Input Validation">✅</span>User Input Validation</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-analysis="Iterative Development">🔄</span>Iterative Development</span>
+                </div>
+                <h3 class="text-xl font-medium text-blue-300 mb-2">Professional & Soft Skills:</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <!-- Skill badges for professional and soft skills, including customer service and sales. -->
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Communication">🗣️</span>Exceptional Communication</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Writing">✍️</span>Writing & Grammar</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Analytical">🔍</span>Strong Analytical Abilities</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Self-starter">🚀</span>Self-starter</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Growth Mindset">🌱</span>Growth Mindset</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Typing">⌨️</span>High Accuracy Typing (80-90 WPM)</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Adaptability">💡</span>Adaptability & Continuous Learning</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Customer Service">🤝</span>Customer Relationship Management</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Listening">👂</span>Active Listening</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Negotiation">⚖️</span>Negotiation</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Conflict Resolution">🕊️</span>Conflict Resolution</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Product Knowledge">📦</span>Product Knowledge</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Sales">💰</span>Sales Acumen</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Empathy">❤️</span>Empathy</span>
+                    <span class="skill-badge"><span class="emoji" role="img" aria-label="Time Management">⏰</span>Time Management</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section: Showcases key projects I've worked on. -->
+        <section class="mb-6">
+            <!-- Collapsible header for the projects section. -->
             <div class="collapsible-header" data-target="projects-content">
-                <h2 class="text-2xl font-bold flex items-center">
-                    <i class="fas fa-folder-open mr-3 text-accent-blue"></i> Projects
-                </h2>
-                <i class="fas fa-chevron-right arrow"></i>
+                <h2 class="text-2xl font-semibold"><i class="fas fa-project-diagram mr-3 text-blue-400"></i>Projects</h2>
+                <span class="arrow text-xl">&#9658;</span>
             </div>
+            <!-- Collapsible content for projects. -->
             <div id="projects-content" class="collapsible-content">
-                <div class="code-block mb-4">
-                    <h3 class="text-lg font-semibold text-accent-teal mb-2">Interactive Resume (This one!)</h3>
-                    <p class="text-gray-300 mb-2">
-                        A dynamic, single-page resume built with modern web technologies, showcasing responsive design, interactive elements, and subtle animations.
-                    </p>
-                    <p class="text-gray-400 text-sm">
-                        <i class="fas fa-code mr-1"></i> Technologies: HTML5, CSS3 (Tailwind CSS), JavaScript, Custom Animations.
-                    </p>
-                    <p class="text-gray-400 text-sm">
-                        <i class="fas fa-link mr-1"></i> <a href="#" class="hover:underline">You're already here!</a>
-                    </p>
-                </div>
+                <p class="mb-4">Explore my code on GitHub: <a href="https://github.com/Newtothisthing90" target="_blank" class="hover:underline">github.com/Newtothisthing90</a></p>
 
-                <div class="code-block mb-4">
-                    <h3 class="text-lg font-semibold text-accent-teal mb-2">E-commerce Platform Backend</h3>
-                    <p class="text-gray-300 mb-2">
-                        Developed a robust backend for an e-commerce application, handling user authentication, product management, order processing, and payment integration.
-                    </p>
-                    <p class="text-gray-400 text-sm">
-                        <i class="fas fa-code mr-1"></i> Technologies: Node.js, Express.js, MongoDB, JWT for Authentication.
-                    </p>
-                    <p class="text-gray-400 text-sm">
-                        <i class="fas fa-globe mr-1"></i> <a href="https://github.com/YourUsername/EcommerceBackend" target="_blank" class="hover:underline">GitHub Repository</a>
-                    </p>
-                </div>
-
-                <div class="code-block mb-4">
-                    <h3 class="text-lg font-semibold text-accent-teal mb-2">Personal Portfolio Website</h3>
-                    <p class="text-gray-300 mb-2">
-                        Designed and developed a personal portfolio to showcase projects and skills, featuring a clean UI/UX and responsive design across devices.
-                    </p>
-                    <p class="text-gray-400 text-sm">
-                        <i class="fas fa-code mr-1"></i> Technologies: React.js, Tailwind CSS, JavaScript, Framer Motion for animations.
-                    </p>
-                    <p class="text-gray-400 text-sm">
-                        <i class="fas fa-globe mr-1"></i> <a href="https://github.com/YourUsername/PersonalPortfolio" target="_blank" class="hover:underline">GitHub Repository</a>
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-6">
-            <div class="collapsible-header" data-target="experience-content">
-                <h2 class="text-2xl font-bold flex items-center">
-                    <i class="fas fa-briefcase mr-3 text-accent-blue"></i> Experience
-                </h2>
-                <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div id="experience-content" class="collapsible-content">
-                <div class="mb-4 p-4 rounded-lg bg-gray-700 shadow-md border border-gray-600">
-                    <h3 class="text-xl font-semibold text-accent-teal mb-1">Freelance Web Developer</h3>
-                    <p class="text-gray-300 mb-1">Self-Employed | Remote</p>
-                    <p class="text-gray-400 text-sm mb-3">June 2023 - Present</p>
-                    <ul class="list-disc list-inside text-gray-300 space-y-1">
-                        <li>Developed and maintained responsive websites for small businesses and individuals, focusing on user experience and client specifications.</li>
-                        <li>Implemented custom features and integrations using modern front-end frameworks and various backend technologies.</li>
-                        <li>Managed project timelines and communicated effectively with clients to ensure timely delivery and satisfaction.</li>
-                        <li>Utilized Git for version control and collaborated on projects with other freelance designers and developers.</li>
-                    </ul>
-                </div>
-                </div>
-        </section>
-
-        <section class="mb-6">
-            <div class="collapsible-header" data-target="availability-content">
-                <h2 class="text-2xl font-bold flex items-center">
-                    <i class="fas fa-calendar-alt mr-3 text-accent-blue"></i> Availability
-                </h2>
-                <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div id="availability-content" class="collapsible-content">
-                <p class="text-gray-300 mb-4">
-                    I am actively seeking full-time opportunities starting **Immediately**. My general availability for interviews and discussions is outlined below. Feel free to contact me to schedule a time that works best for you!
-                </p>
-                <div class="calendar-grid-wrapper">
-                    <div id="calendar-hover-message" class="text-center">Ready to work!</div>
-                    <div class="calendar-grid">
-                        <div class="calendar-cell bg-gray-700"></div>
-                        <div class="calendar-cell day-header">Mon</div>
-                        <div class="calendar-cell day-header">Tue</div>
-                        <div class="calendar-cell day-header">Wed</div>
-                        <div class="calendar-cell day-header">Thu</div>
-                        <div class="calendar-cell day-header">Fri</div>
-                        <div class="calendar-cell day-header">Sat</div>
-                        <div class="calendar-cell day-header">Sun</div>
-
-                        <div class="calendar-cell time-label">8 AM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell"></div>
-                        <div class="calendar-cell"></div>
-
-                        <div class="calendar-cell time-label">9 AM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell"></div>
-                        <div class="calendar-cell"></div>
-
-                        <div class="calendar-cell time-label">10 AM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell"></div>
-                        <div class="calendar-cell"></div>
-
-                        <div class="calendar-cell time-label">11 AM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell"></div>
-                        <div class="calendar-cell"></div>
-
-                        <div class="calendar-cell time-label">12 PM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell"></div>
-                        <div class="calendar-cell"></div>
-
-                        <div class="calendar-cell time-label">1 PM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-
-                        <div class="calendar-cell time-label">2 PM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-
-                        <div class="calendar-cell time-label">3 PM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-
-                        <div class="calendar-cell time-label">4 PM</div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
-                        <div class="calendar-cell available"></div>
+                <!-- Project 1: Grocery Item Tracker -->
+                <div class="mb-6">
+                    <!-- Collapsible header for the Grocery Item Tracker project. -->
+                    <div class="project-collapsible-header" data-target="grocery-tracker-project">
+                        <h3 class="font-medium">CS-210: Grocery Item Tracker (C++)</h3>
+                        <span class="arrow text-xl">&#9658;</span>
+                    </div>
+                    <!-- Collapsible content for the Grocery Item Tracker project. -->
+                    <div id="grocery-tracker-project" class="project-collapsible-content">
+                        <!-- Code block describing the project. -->
+                        <div class="code-block">
+                            <pre>
+// Project Description:
+// The "Grocery Item Tracker" is a C++ app I built. It really shows how I pay
+// attention to good code, handle files well, and make sure user input is solid.
+// Working on this project helped me get better at finding and fixing problems,
+// and making solutions that can grow. Plus, it really helped me explain how I
+// solve problems, which is super important for teaching AI how to code.
+                            </pre>
+                        </div>
+                        <!-- Mini-Demo for the Grocery Stock Manager. -->
+                        <div class="project-demo-container">
+                            <h4 class="text-lg font-semibold text-teal-300 mb-3">Mini-Demo: Grocery Stock Manager</h4>
+                            <div class="flex flex-col sm:flex-row gap-2 mb-3">
+                                <input type="text" id="grocery-item-input" placeholder="Enter item name (e.g., Apples)" class="project-demo-input flex-grow">
+                                <input type="number" id="grocery-quantity-input" placeholder="Quantity (e.g., 5)" class="project-demo-input w-24">
+                            </div>
+                            <div class="flex gap-2">
+                                <button id="add-item-btn" class="project-demo-button flex-grow">Add Item</button>
+                                <button id="check-stock-btn" class="project-demo-button flex-grow">Check Stock</button>
+                            </div>
+                            <div id="grocery-output" class="project-demo-output">
+                                Welcome to the Grocery Stock Manager!
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <p class="text-gray-400 text-sm mt-2">
-                    <span class="text-accent-teal">Green blocks</span> indicate my full-time availability (40 hours/week) as a contract, full-time employee.
-                </p>
-            </div>
-        </section>
 
-        <section class="mb-6">
-            <div class="collapsible-header" data-target="interests-content">
-                <h2 class="text-2xl font-bold flex items-center">
-                    <i class="fas fa-heart mr-3 text-accent-blue"></i> Interests & Hobbies
-                </h2>
-                <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div id="interests-content" class="collapsible-content">
-                <p class="text-gray-300">
-                    Hello! It's exciting to share my resume with you! While the main page covers my professional skills, I've got more to share if you're curious. Feel free to ask me anything about my personal insights, hobbies, or even my Family Life - let's make it a conversation!
-                </p>
-            </div>
-        </section>
-
-        <button id="chatbot-fab" class="chatbot-fab">
-            <span id="chatbot-fab-icon" class="w-full h-full object-contain flex items-center justify-center">💬</span>
-        </button>
-
-        <div id="chatbot-window" class="chatbot-window">
-            <div class="chatbot-header">
-                Chat with Lawrence!
-                <button class="close-btn" id="close-chatbot">&times;</button>
-            </div>
-
-            <div id="chatbot-messages" class="chatbot-messages">
-                <div class="chatbot-message-container bot">
-                    <img src="https://via.placeholder.com/48x48?text=LW" class="chatbot-profile-pic" alt="Lawrence's profile picture">
-                    <div class="chatbot-message">Hello! I'm Lawrence. I'm excited to share my resume with you! While the main page covers my professional skills, I've got more to share if you're curious. Feel free to ask me anything about my personal insights, hobbies, or even my Family Life - let's make it a conversation!</div>
+                <!-- Project 2: Fun Fact Generator -->
+                <div class="mb-6">
+                    <!-- Collapsible header for the Fun Fact Generator project. -->
+                    <div class="project-collapsible-header" data-target="fun-fact-project">
+                        <h3 class="font-medium">Fun Fact Generator (AI-Powered)</h3>
+                        <span class="arrow text-xl">&#9658;</span>
+                    </div>
+                    <!-- Collapsible content for the Fun Fact Generator project. -->
+                    <div id="fun-fact-project" class="project-collapsible-content">
+                        <!-- Code block describing the project. -->
+                        <div class="code-block">
+                            <pre>
+// Project Description:
+// This demo showcases integration with AI models to generate creative content.
+// It uses the Gemini API to fetch a random fun fact, demonstrating my ability
+// to work with external APIs and handle asynchronous data.
+                            </pre>
+                        </div>
+                        <!-- Mini-Demo for the Fun Fact Generator. -->
+                        <div class="project-demo-container">
+                            <h4 class="text-lg font-semibold text-teal-300 mb-3">Mini-Demo: Get a Random Fun Fact!</h4>
+                            <button id="generate-fun-fact-btn" class="project-demo-button w-full mb-3">Generate Fun Fact</button>
+                            <div id="fun-fact-output" class="project-demo-output">
+                                Click the button to get a random fun fact!
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="chatbot-input-area">
-                <input type="text" id="chatbot-user-input" placeholder="Ask me a question...">
-                <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+        <!-- Availability Calendar Section: My standard work availability. -->
+        <section class="mb-6">
+            <!-- Collapsible header for the availability section. -->
+            <div class="collapsible-header" data-target="availability-content">
+                <h2 class="text-2xl font-semibold"><i class="fas fa-calendar-alt mr-3 text-blue-400"></i>Availability Calendar</h2>
+                <span class="arrow text-xl">&#9658;</span>
+            </div>
+            <!-- Collapsible content for the availability calendar. -->
+            <div id="availability-content" class="collapsible-content">
+                <p class="mb-4 text-lg text-center font-medium text-gray-300">My Standard Availability (8 AM - 8 PM Daily):</p>
+                <!-- Wrapper for the calendar grid to enable the hover message. -->
+                <div class="calendar-grid-wrapper">
+                    <div class="calendar-grid" id="availability-calendar-grid">
+                        <!-- Calendar cells are dynamically generated by JavaScript. -->
+                    </div>
+                    <!-- Hover message that appears over the calendar. -->
+                    <div id="calendar-hover-message" class="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-90 rounded-lg text-teal-300 text-2xl font-bold opacity-0 transition-opacity duration-300 pointer-events-none">
+                        Ready to work! ✨
+                    </div>
+                </div>
+                <p class="mt-4 text-center text-gray-400 text-sm">Full-time availability: 40 hours/week as a contract remote worker.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Chatbot Floating Action Button (FAB): My interactive AI assistant. -->
+    <button id="chatbot-fab" class="chatbot-fab">
+        <!-- Using a generic chat icon for the FAB. -->
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Chatbot Window: The main interface for the chatbot. -->
+    <div id="chatbot-window" class="chatbot-window">
+        <!-- Chatbot Header: Contains the title and close button. -->
+        <div class="chatbot-header">
+            <span>Chat with Lawrence</span>
+            <button class="close-btn" id="chatbot-close-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <!-- Chatbot Messages Area: Displays the conversation. -->
+        <div class="chatbot-messages" id="chatbot-messages">
+            <!-- Initial welcome message from the bot, with my profile picture. -->
+            <div class="chatbot-message-container bot">
+                <!-- My profile picture for the chatbot. I'm using the uploaded 'image_5f2503.png' here. -->
+                <img src="uploaded:image_5f2503.png-02f9abd8-8640-44ba-9992-4245037a9e33" alt="Lawrence's profile picture" class="chatbot-profile-pic">
+                <div class="chatbot-message">Hello! I'm Lawrence. I'm excited to share my resume with you! While the main page covers my professional skills, I've got more to share if you're curious. Feel free to ask me anything about my personal insights, hobbies, or even my family life – let's make it a fun puzzle!</div>
             </div>
         </div>
-
-    </main>
+        <!-- Chatbot Input Area: Where the user types their questions. -->
+        <div class="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="Ask me a question...">
+            <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <script>
         // My resume data, structured as a JavaScript object for easy access and dynamic content generation.
         const resumeData = {
             name: "Lawrence Langelier Jr.",
-            summary: "A passionate Software Development student with a knack for building robust and user-friendly applications. Ready to innovate and contribute to cutting-edge projects.",
-            // ... more resume data could go here, like detailed projects, experience descriptions for tooltips, etc.
+            email: "Lj.langelier@icloud.com",
+            phone: "207-576-1359",
+            github: "github.com/Newtothisthing90",
+            summary: "Highly enthusiastic and dedicated Computer Science student with a robust foundation in programming (Python, Java, C++, JavaScript) and a passion for technology. Seeking challenging opportunities in the computer science field to leverage strong analytical, communication, and problem-solving skills. Committed to continuous learning and contributing to innovative technical solutions.",
+            education: {
+                university: "Southern New Hampshire University",
+                degree: "Bachelor of Science in Computer Science",
+                completion: "65% complete",
+                gpa: "3.917",
+                coursework: ["Data Analytics (DAD 220)", "Introduction to AI Literacy", "Software Design", "Algorithms"]
+            },
+            skills: {
+                programmingLanguages: ["Python", "Java", "C++", "JavaScript"],
+                technicalSkills: ["Data Analytics", "Software Design", "Algorithms", "Code Quality", "Debugging", "Problem Solving", "File Handling", "User Input Validation", "Iterative Development"],
+                softSkills: [
+                    "Exceptional Communication", "Writing & Grammar", "Strong Analytical Abilities", "Self-starter",
+                    "Growth Mindset", "High Accuracy Typing (80-90 WPM)", "Adaptability & Continuous Learning",
+                    "Customer Relationship Management", "Active Listening", "Negotiation", "Conflict Resolution",
+                    "Product Knowledge", "Sales Acumen", "Empathy", "Time Management"
+                ]
+            },
+            projects: [
+                {
+                    name: "CS-210: Grocery Item Tracker (C++)",
+                    description: "The 'Grocery Item Tracker' is a C++ app I built. It really shows how I pay attention to good code, handle files well, and make sure user input is solid. Working on this project helped me get better at finding and fixing problems, and making solutions that can grow. Plus, it really helped me explain how I solve problems, which is super important for teaching AI how to code."
+                },
+                {
+                    name: "Fun Fact Generator (AI-Powered)",
+                    description: "This demo showcases integration with AI models to generate creative content. It uses the Gemini API to fetch a random fun fact, demonstrating my ability to work with external APIs and handle asynchronous data."
+                }
+            ],
+            availability: "40 hours/week as a contract remote worker, 8 AM - 8 PM daily, Monday through Sunday.",
+            personalInsights: {
+                careerInitialDraw: "What initially drew me to Computer Science was the endless possibility of creating something from nothing and solving complex puzzles with logic and code. It's incredibly satisfying to build tools that can make a real impact.",
+                nextLanguage: "I am keen on learning more about AI and Advanced Automation.",
+                codingChallenge: "A significant coding challenge I overcame was optimizing the file I/O for my 'Grocery Item Tracker' project, which involved researching and implementing buffered I/O and optimized data structures. It taught me the importance of profiling and iterative optimization.",
+                workEnvironment: "I thrive in collaborative environments where I can openly share ideas and learn from others, but also have dedicated time for focused, independent work. Ideally, I prefer a culture that encourages continuous learning and innovation.",
+                favoritePartCoding: "My favorite part about working on a coding project is definitely the problem-solving aspect – breaking down a complex problem into smaller, manageable pieces and then seeing the solution come to life line by line.",
+                stayUpdated: "I stay updated through a mix of online courses (like those on Coursera), tech blogs, GitHub trending repositories, participating in developer communities, and experimenting with new frameworks in personal projects.",
+                techTrendExcited: "I am particularly excited about the advancements in explainable AI (XAI). As AI becomes more integrated into critical systems, understanding *why* a model makes certain decisions is crucial, and XAI is making significant strides in that area.",
+                dreamApplication: "If I could build any software application, it would be an intelligent, personalized learning platform that adapts to each individual's learning style and pace, using AI to identify knowledge gaps and suggest optimal learning paths.",
+                learnNewConcept: "When learning a new programming concept, I typically start by understanding the 'why' and 'what' through documentation and tutorials, then immediately jump into 'how' by coding small examples. I find hands-on application solidifies my understanding best.",
+                fiveYearRole: "In five years, I see myself as a proficient software engineer, contributing to impactful projects, potentially specializing in AI or data-intensive applications. I aim to be in a role where I can continue to learn, mentor, and solve challenging technical problems."
+            },
+            familyLife: {
+                positiveInfluence: "My family has always encouraged my curiosity and supported my passion for technology, providing resources and a positive environment that fostered my interest in computer science from a young age.",
+                siblings: "Yes, I have two younger siblings. They're a lot of fun and keep me on my toes!",
+                familyTradition: "A cherished family tradition is our annual summer camping trip.",
+                grewUp: "I grew up in a small town in Maine.",
+                familySupportImportance: "Family support is incredibly important to me; their encouragement and belief in me have been a huge motivator throughout my academic and professional journey.",
+                lifeLesson: "One life lesson I learned from my family is the importance of perseverance. My parents always taught me that even when things are tough, consistency and effort eventually pay off.",
+                pets: "Yes, I have a very energetic Golden Retriever named 'Byte' (a nod to my field!).",
+                favoriteFamilyMemory: "My favorite family memory is probably a road trip we took across the country a few years ago. We saw so many amazing places and made countless memories.",
+                spendTimeFamily: "I like to play games and watch movies with my two children. Good food always makes everything better.",
+                familyValues: "My family instilled in me values of integrity, empathy, and a strong work ethic. They taught me to always be honest, considerate of others, and to put my best effort into everything I do."
+            },
+            hobbiesAndInterests: {
+                relaxing: "After a long day, I love hanging with my kids, watching videos to get better at my skills, and practicing them, of course.",
+                sportsOutdoor: "I love to swim with my two kids.",
+                musicGenre: "I like anything before 2005.",
+                lastMediaEnjoyed: "My favorite movie is Joker.",
+                creativeHobbies: "I love to learn to make games in Unity and I love to practice HTML.",
+                videoGameType: "I'm a big fan of Sports and Simulation games.",
+                travelAnywhere: "I am happy where I am.",
+                comfortFood: "My go-to comfort food is definitely a classic homemade lasagna.",
+                collectAnything: "Yes, I collect Pro Wrestling memorabilia.",
+                funSkillToLearn: "Purely for fun, I'd love to learn anything to improve AI Automation."
+            },
+            favorites: {
+                season: "Autumn is my favorite season. I love the crisp air, the changing leaves, and the cozy feeling it brings.",
+                animal: "My favorite animal is a dog.",
+                color: "My favorite color is deep space blue.",
+                smallDailyJoy: "A small thing that makes my day better is Mountain Dew.",
+                weatherType: "I enjoy cool, clear weather – perfect for a walk or a hike.",
+                superpower: "If I could have any superpower, it would be technopathy – the ability to intuitively understand and control technology. It would be like having a super-debugger!",
+                personalityWord: "One word that describes my personality best is 'analytical'. I tend to approach situations by breaking them down and understanding their components.",
+                favoriteQuote: "My favorite quote is 'The only way to do great work is to love what you do.' It really resonates with my passion for computer science.",
+                favoriteTechOwned: "My favorite piece of technology I own is my custom-built PC. It's my workstation, my gaming rig, and my creative hub all in one.",
+                uniqueQuirk: "Something unique about me is that I have an uncanny ability to spot typos in almost any text, even when I'm not actively looking for them!"
+            }
         };
 
-        // DOM Elements: Grabbing references to key HTML elements for JavaScript manipulation.
-        const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
-        const typewriterOutput = document.getElementById('typewriter-output');
-        const rgbToggle = document.getElementById('rgb-toggle');
-        const headerName = document.querySelector('.header-name');
-        const chatbotFab = document.getElementById('chatbot-fab');
-        const chatbotWindow = document.getElementById('chatbot-window');
-        const closeChatbotBtn = document.getElementById('close-chatbot');
-        const chatbotMessages = document.getElementById('chatbot-messages');
-        const chatbotUserInput = document.getElementById('chatbot-user-input');
-        const chatbotSendBtn = document.getElementById('chatbot-send-btn');
-        const calendarGridWrapper = document.querySelector('.calendar-grid-wrapper');
-        const calendarHoverMessage = document.getElementById('calendar-hover-message');
 
-        // Initializing Typewriter Effect: Makes the summary text appear dynamically.
-        let i = 0;
-        function typeWriter() {
-            if (i < resumeData.summary.length) {
-                let char = resumeData.summary.charAt(i);
-                let span = document.createElement('span');
-                span.textContent = char;
-                span.classList.add('typed-letter');
-                if (!rgbToggle.checked) { // Apply static-color if RGB is off initially
-                    span.classList.add('static-color');
-                }
-                typewriterOutput.appendChild(span);
-                i++;
-                setTimeout(typeWriter, 50); // Typing speed: 50ms per character
-            }
-        }
-        typeWriter();
+        // Ensures all DOM content is loaded before running scripts.
+        document.addEventListener('DOMContentLoaded', function() {
+            const headers = document.querySelectorAll('.collapsible-header');
+            const projectHeaders = document.querySelectorAll('.project-collapsible-header');
 
-        // Collapsible Sections Logic: Handles expanding and collapsing resume sections.
-        collapsibleHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const targetId = header.dataset.target;
-                const content = document.getElementById(targetId);
+            /**
+             * Toggles the visibility of a collapsible content section.
+             * @param {HTMLElement} header - The clickable header element.
+             * @param {string} contentId - The ID of the content element to toggle.
+             */
+            function toggleContent(header, contentId) {
+                const content = document.getElementById(contentId);
                 const arrow = header.querySelector('.arrow');
 
-                // Toggle active class on content for expand/collapse
+                // Toggles the 'active' class on the content to expand/collapse it.
                 content.classList.toggle('active');
-                // Toggle rotate class on arrow for visual indication
+                // Toggles the 'rotate' class on the arrow for visual feedback.
                 arrow.classList.toggle('rotate');
 
-                // Adjust max-height for smooth transition.
-                // If content is active, set max-height to scrollHeight, else 0.
-                if (content.classList.contains('active')) {
-                    content.style.maxHeight = content.scrollHeight + "px";
+                const isExpanded = content.classList.contains('active');
+                header.setAttribute('aria-expanded', isExpanded); // Accessibility attribute.
+
+                // Special handling for the education section: trigger animations when opened.
+                if (contentId === 'education-content' && isExpanded) {
+                    // Resets and then animates to ensure the progress bars play every time it's opened.
+                    resetEducationProgress();
+                    resetGPAProgress();
+                    // A small delay to allow the reset to render before re-animating.
+                    setTimeout(() => {
+                        animateEducationProgress(65);
+                        animateGPAProgress(3.917);
+                    }, 50);
+                } else if (contentId === 'education-content' && !isExpanded) {
+                    // If the education section is closing, I reset the progress bars.
+                    resetEducationProgress();
+                    resetGPAProgress();
+                }
+            }
+
+            // Adds click listeners to all main collapsible headers.
+            headers.forEach(header => {
+                header.addEventListener('click', function() {
+                    toggleContent(this, this.dataset.target);
+                });
+                // Sets initial accessibility state.
+                const content = document.getElementById(header.dataset.target);
+                header.setAttribute('aria-expanded', content.classList.contains('active'));
+            });
+
+            // Adds click listeners to all project-specific collapsible headers.
+            projectHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    toggleContent(this, this.dataset.target);
+                });
+                // Sets initial accessibility state and ensures projects are collapsed by default.
+                const content = document.getElementById(header.dataset.target);
+                header.setAttribute('aria-expanded', content.classList.contains('active'));
+                content.classList.remove('active'); // Ensures projects start collapsed.
+            });
+
+            // Typewriter effect for the summary text.
+            const summaryTextElement = document.getElementById('typewriter');
+            const fullSummaryText = summaryTextElement.textContent;
+            summaryTextElement.textContent = ''; // Clears original text to build it character by character.
+            const typingSpeed = 30; // Speed of typing in milliseconds per character.
+
+            // Iterates through each character and creates a span for animation.
+            for (let i = 0; i < fullSummaryText.length; i++) {
+                const charSpan = document.createElement('span');
+                charSpan.innerHTML = fullSummaryText[i] === ' ' ? '&nbsp;' : fullSummaryText[i]; // Handles spaces correctly.
+                charSpan.classList.add('typed-letter');
+                charSpan.style.animationDelay = `${(i * typingSpeed / 1000)}s`; // Staggers animation start.
+                summaryTextElement.appendChild(charSpan);
+            }
+
+            // RGB Toggle functionality for my name and summary text.
+            const rgbToggleButton = document.getElementById('rgb-toggle-btn');
+            const rgbToggleText = document.getElementById('rgb-toggle-text');
+            const headerName = document.querySelector('.header-name');
+            const typedLetters = document.querySelectorAll('.typed-letter');
+            let isRgbOn = true; // Initial state: RGB is on.
+
+            if (rgbToggleButton) {
+                rgbToggleButton.addEventListener('click', () => {
+                    isRgbOn = !isRgbOn; // Toggles the state.
+                    if (isRgbOn) {
+                        // If RGB is on, remove 'static-color' class to re-enable animations.
+                        headerName.classList.remove('static-color');
+                        typedLetters.forEach(letter => letter.classList.remove('static-color'));
+                        rgbToggleText.textContent = 'RGB On';
+                    } else {
+                        // If RGB is off, add 'static-color' class to disable animations and set static color.
+                        headerName.classList.add('static-color');
+                        typedLetters.forEach(letter => letter.classList.add('static-color'));
+                        rgbToggleText.textContent = 'RGB Off';
+                    }
+                });
+            }
+
+            // Copy-to-clipboard functionality for contact information.
+            const copyButtons = document.querySelectorAll('.copy-button');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.dataset.clipboardTarget; // Gets the ID of the element whose text needs to be copied.
+                    let textToCopy = '';
+                    if (targetId === 'email-link') {
+                        textToCopy = document.getElementById('email-link').textContent;
+                    } else if (targetId === 'phone-number') {
+                        textToCopy = this.previousElementSibling.textContent.trim(); // Gets text from the sibling element.
+                    } else if (targetId === 'github-link') {
+                        textToCopy = document.getElementById('github-link').href; // Gets the href for the GitHub link.
+                    }
+                    const tempInput = document.createElement('textarea'); // Creates a temporary textarea to hold the text.
+                    tempInput.value = textToCopy;
+                    document.body.appendChild(tempInput);
+                    tempInput.select(); // Selects the text.
+                    document.execCommand('copy'); // Executes the copy command.
+                    document.body.removeChild(tempInput); // Removes the temporary textarea.
+
+                    // Provides visual feedback to the user that text has been copied.
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    this.style.backgroundColor = 'var(--accent-teal)';
+                    this.style.color = 'var(--bg-dark)';
+                    this.style.borderColor = 'var(--accent-teal)';
+                    setTimeout(() => {
+                        this.innerHTML = originalText; // Restores original button text.
+                        this.style.backgroundColor = 'var(--bg-medium)';
+                        this.style.color = 'var(--accent-teal)';
+                        this.style.borderColor = 'var(--accent-teal-dark)';
+                    }, 1500);
+                });
+            });
+
+            /**
+             * Dynamically generates the availability calendar grid.
+             * I built this to visually represent my standard working hours.
+             */
+            function generateAvailabilityCalendar() {
+                const calendarGrid = document.getElementById('availability-calendar-grid');
+                if (!calendarGrid) return; // Exits if the element isn't found.
+
+                const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                const startHour = 8; // 8 AM
+                const endHour = 20; // 8 PM
+
+                const emptyCell = document.createElement('div');
+                emptyCell.classList.add('calendar-cell', 'day-header');
+                calendarGrid.appendChild(emptyCell); // Top-left empty corner.
+
+                // Creates day headers (Mon, Tue, etc.).
+                days.forEach(day => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.classList.add('calendar-cell', 'day-header');
+                    dayHeader.textContent = day;
+                    calendarGrid.appendChild(dayHeader);
+                });
+
+                // Populates the grid with time labels and available cells.
+                for (let hour = startHour; hour <= endHour; hour++) {
+                    const timeLabel = document.createElement('div');
+                    timeLabel.classList.add('calendar-cell', 'time-label');
+                    // Formats time to AM/PM.
+                    timeLabel.textContent = `${hour > 12 ? hour - 12 : hour}${hour >= 12 ? ' PM' : ' AM'}`;
+                    calendarGrid.appendChild(timeLabel);
+
+                    // Creates a cell for each hour of each day.
+                    for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+                        const cell = document.createElement('div');
+                        cell.classList.add('calendar-cell');
+                        cell.classList.add('available'); // Marks all cells as available.
+                        calendarGrid.appendChild(cell);
+                    }
+                }
+            }
+
+            /**
+             * Animates the degree completion circular progress bar.
+             * @param {number} percentage - The completion percentage (e.g., 65).
+             */
+            function animateEducationProgress(percentage) {
+                const circle = document.getElementById('completion-progress-circle');
+                const percentText = document.getElementById('progress-percent');
+                if (!circle || !percentText) return;
+
+                const circumference = 2 * Math.PI * 40; // Calculate circumference (2 * PI * R).
+                const finalOffset = circumference - (percentage / 100) * circumference; // Target offset for animation.
+
+                // Sets CSS variables for the animation to control start and end points.
+                circle.style.setProperty('--initial-offset', circumference);
+                circle.style.setProperty('--final-offset', finalOffset);
+                // Applies the stroke animation and a glow effect.
+                circle.style.animation = `strokeDashoffset 1.5s ease-out forwards, glow 2s ease-in-out infinite alternate 1.5s`;
+
+                let currentPercent = 0;
+                // Animates the percentage text count-up.
+                const percentInterval = setInterval(() => {
+                    if (currentPercent < percentage) {
+                        currentPercent++;
+                        percentText.textContent = `${currentPercent}%`;
+                    } else {
+                        clearInterval(percentInterval);
+                    }
+                }, 1500 / percentage); // Adjusts interval for a smoother count.
+            }
+
+            /**
+             * Resets the degree completion progress bar to its initial state.
+             */
+            function resetEducationProgress() {
+                const circle = document.getElementById('completion-progress-circle');
+                const percentText = document.getElementById('progress-percent');
+                if (!circle || !percentText) return;
+                const circumference = 2 * Math.PI * 40;
+                circle.style.setProperty('--initial-offset', circumference);
+                circle.style.setProperty('--final-offset', circumference);
+                circle.style.animation = 'none'; // Clears any active animation.
+                percentText.textContent = '0%';
+            }
+
+            /**
+             * Animates the GPA circular progress bar.
+             * @param {number} gpa - The GPA value (e.g., 3.917).
+             */
+            function animateGPAProgress(gpa) {
+                const circle = document.getElementById('gpa-progress-circle');
+                const gpaText = document.getElementById('gpa-display');
+                if (!circle || !gpaText) return;
+
+                const maxGpa = 4.0;
+                const percentage = (gpa / maxGpa) * 100; // Converts GPA to a percentage for the circle.
+                const circumference = 2 * Math.PI * 40;
+                const finalOffset = circumference - (percentage / 100) * circumference;
+
+                // Sets CSS variables for the animation.
+                circle.style.setProperty('--initial-offset', circumference);
+                circle.style.setProperty('--final-offset', finalOffset);
+                // Applies the stroke animation and a special GPA glow.
+                circle.style.animation = `strokeDashoffset 1.5s ease-out forwards 0.3s, gpaGlow 2s ease-in-out infinite alternate 1.8s`;
+
+                let currentGpa = 0.000;
+                // Animates the GPA text count-up.
+                const gpaInterval = setInterval(() => {
+                    if (currentGpa < gpa) {
+                        currentGpa += (gpa / 100); // Increments gradually.
+                        if (currentGpa > gpa) currentGpa = gpa; // Ensures it doesn't overshoot.
+                        gpaText.textContent = currentGpa.toFixed(3); // Formats to 3 decimal places.
+                    } else {
+                        clearInterval(gpaInterval);
+                    }
+                }, 1500 / 100); // Adjusts interval for a smoother count.
+            }
+
+            /**
+             * Resets the GPA progress bar to its initial state.
+             */
+            function resetGPAProgress() {
+                const circle = document.getElementById('gpa-progress-circle');
+                const gpaText = document.getElementById('gpa-display');
+                if (!circle || !gpaText) return;
+                const circumference = 2 * Math.PI * 40;
+                circle.style.setProperty('--initial-offset', circumference);
+                circle.style.setProperty('--final-offset', circumference);
+                circle.style.animation = 'none'; // Clears any active animation.
+                gpaText.textContent = '0.000';
+            }
+
+            // Generates the calendar when the page loads.
+            generateAvailabilityCalendar();
+
+            // Event listener for the new button that triggers education meter animations.
+            const triggerEducationAnimationBtn = document.getElementById('trigger-education-animation');
+            if (triggerEducationAnimationBtn) {
+                triggerEducationAnimationBtn.addEventListener('click', () => {
+                    resetEducationProgress(); // Resets before animating to ensure it replays.
+                    resetGPAProgress();
+                    setTimeout(() => { // Small delay to allow the reset to render.
+                        animateEducationProgress(65);
+                        animateGPAProgress(3.917);
+                    }, 50);
+                });
+            }
+
+            // Chatbot elements.
+            const chatbotFab = document.getElementById('chatbot-fab');
+            const chatbotWindow = document.getElementById('chatbot-window');
+            const chatbotCloseBtn = document.getElementById('chatbot-close-btn');
+            const chatbotMessages = document.getElementById('chatbot-messages');
+            const chatbotInput = document.getElementById('chatbot-input');
+            const chatbotSendBtn = document.getElementById('chatbot-send-btn');
+
+            let chatHistory = []; // Stores the conversation history for the AI model.
+
+            /**
+             * Adds a new message to the chatbot display.
+             * @param {string} text - The message text.
+             * @param {'user'|'bot'} sender - The sender of the message.
+             */
+            function addMessage(text, sender) {
+                const messageContainer = document.createElement('div');
+                messageContainer.classList.add('chatbot-message-container', sender);
+
+                // My profile picture for the chatbot. I'm using the uploaded 'image_5f2503.png' here.
+                const botProfilePicUrl = "uploaded:image_5f2503.png-02f9abd8-8640-44ba-9992-4245037a9e33";
+
+                if (sender === 'bot') {
+                    const profilePic = document.createElement('img');
+                    profilePic.classList.add('chatbot-profile-pic');
+                    profilePic.src = botProfilePicUrl;
+                    profilePic.alt = "Lawrence's profile picture";
+                    // Fallback for image loading errors.
+                    profilePic.onerror = function() {
+                        this.src = "https://placehold.co/50x50/63b3ed/ffffff?text=LL";
+                        this.alt = "Placeholder profile picture";
+                    };
+                    messageContainer.appendChild(profilePic);
+                }
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('chatbot-message');
+                messageDiv.textContent = text;
+                messageContainer.appendChild(messageDiv);
+                chatbotMessages.appendChild(messageContainer);
+                // Scrolls to the latest message.
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+
+            /**
+             * Shows or hides the "Lawrence is typing..." indicator.
+             * @param {boolean} show - True to show, false to hide.
+             */
+            function showTypingIndicator(show) {
+                let indicator = document.getElementById('typing-indicator');
+                if (show && !indicator) {
+                    indicator = document.createElement('div');
+                    indicator.id = 'typing-indicator';
+                    indicator.classList.add('chatbot-typing-indicator');
+                    indicator.textContent = 'Lawrence is typing...';
+                    chatbotMessages.appendChild(indicator); // Appends the indicator.
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                } else if (!show && indicator) {
+                    indicator.remove(); // Removes the indicator.
+                }
+            }
+
+            /**
+             * Sends a user message to my AI assistant (via the Gemini API) and displays its response.
+             * @param {string} userMessage - The message from the user.
+             */
+            async function sendMessageToLLM(userMessage) {
+                showTypingIndicator(true); // Shows typing indicator.
+                // Adds the user's message to the chat history.
+                chatHistory.push({ role: "user", parts: [{ text: userMessage }] });
+
+                // This is the core prompt that tells my AI assistant how to respond,
+                // acting as me (Lawrence) and using the provided resume data.
+                const personaPromptBase = `You are Lawrence Langelier Jr. You are a highly enthusiastic and dedicated Computer Science student. Your resume is provided below. Answer questions as if you are Lawrence, using information directly from your resume. Be concise, professional, and highlight your relevant skills and projects for a computer science role. When referring to specific data points (like contact info, education details, or personal insights), integrate them naturally into conversational sentences rather than stating them as direct key-value pairs (e.g., instead of "Email: Lj.langelier@icloud.com", say "You can reach me at Lj.langelier@icloud.com"). Avoid using bullet points or numbered lists unless explicitly asked for a list. Ensure the tone is natural and conversational, like a real person speaking. Do not make up information. If a question cannot be answered from the resume, politely state that the information isn't explicitly on your resume.
+
+--- Lawrence Langelier Jr.'s Resume Data ---
+Full Name: ${resumeData.name}
+Email: ${resumeData.email}
+Phone: ${resumeData.phone}
+GitHub: ${resumeData.github}
+Summary: ${resumeData.summary}
+Education: University: ${resumeData.education.university}, Degree: ${resumeData.education.degree}, Completion: ${resumeData.education.completion}, GPA: ${resumeData.education.gpa}, Coursework: ${resumeData.education.coursework.join(', ')}.
+Skills: Programming Languages: ${resumeData.skills.programmingLanguages.join(', ')}. Technical Skills: ${resumeData.skills.technicalSkills.join(', ')}. Soft Skills: ${resumeData.skills.softSkills.join(', ')}.
+Projects:
+- ${resumeData.projects[0].name}: ${resumeData.projects[0].description}
+- ${resumeData.projects[1].name}: ${resumeData.projects[1].description}
+Availability: ${resumeData.availability}
+Personal Insights: Career Initial Draw: ${resumeData.personalInsights.careerInitialDraw}, Next Language: ${resumeData.personalInsights.nextLanguage}, Coding Challenge: ${resumeData.personalInsights.codingChallenge}, Work Environment: ${resumeData.personalInsights.workEnvironment}, Favorite Part Coding: ${resumeData.personalInsights.favoritePartCoding}, Stay Updated: ${resumeData.personalInsights.stayUpdated}, Tech Trend Excited: ${resumeData.personalInsights.techTrendExcited}, Dream Application: ${resumeData.personalInsights.dreamApplication}, Learn New Concept: ${resumeData.personalInsights.learnNewConcept}, Five Year Role: ${resumeData.personalInsights.fiveYearRole}.
+Family Life: Positive Influence: ${resumeData.familyLife.positiveInfluence}, Siblings: ${resumeData.familyLife.siblings}, Family Tradition: ${resumeData.familyLife.familyTradition}, Grew Up: ${resumeData.familyLife.grewUp}, Family Support Importance: ${resumeData.familyLife.familySupportImportance}, Life Lesson: ${resumeData.familyLife.lifeLesson}, Pets: ${resumeData.familyLife.pets}, Favorite Family Memory: ${resumeData.familyLife.favoriteFamilyMemory}, Spend Time Family: ${resumeData.familyLife.spendTimeFamily}, Family Values: ${resumeData.familyLife.familyValues}.
+Hobbies and Interests: Relaxing: ${resumeData.hobbiesAndInterests.relaxing}, Sports Outdoor: ${resumeData.hobbiesAndInterests.sportsOutdoor}, Music Genre: ${resumeData.hobbiesAndInterests.musicGenre}, Last Media Enjoyed: ${resumeData.hobbiesAndInterests.lastMediaEnjoyed}, Creative Hobbies: ${resumeData.hobbiesAndInterests.creativeHobbies}, Video Game Type: ${resumeData.hobbiesAndInterests.videoGameType}, Travel Anywhere: ${resumeData.hobbiesAndInterests.travelAnywhere}, Comfort Food: ${resumeData.hobbiesAndInterests.comfortFood}, Collect Anything: "Yes, I collect Pro Wrestling memorabilia.",
+Fun Skill To Learn: "Purely for fun, I'd love to learn anything to improve AI Automation."
+Favorites: Season: ${resumeData.favorites.season}, Animal: ${resumeData.favorites.animal}, Color: ${resumeData.favorites.color}, Small Daily Joy: ${resumeData.favorites.smallDailyJoy}, Weather Type: ${resumeData.favorites.weatherType}, Superpower: ${resumeData.favorites.superpower}, Personality Word: ${resumeData.favorites.personalityWord}, Favorite Quote: ${resumeData.favorites.favoriteQuote}, Favorite Tech Owned: ${resumeData.favorites.favoriteTechOwned}, Unique Quirk: ${resumeData.favorites.uniqueQuirk}.
+--- End of Resume Data ---
+`;
+
+                // Combines the persona prompt with the actual chat history for the AI model.
+                const fullPayloadContents = [{ role: "user", parts: [{ text: personaPromptBase }] }];
+                fullPayloadContents.push(...chatHistory);
+
+                const payload = {
+                    contents: fullPayloadContents,
+                };
+
+                const apiKey = ""; // API key is handled by the platform.
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    // Makes the API call to the AI model.
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+                    }
+
+                    const result = await response.json();
+                    showTypingIndicator(false); // Hides typing indicator.
+
+                    // Processes the AI's response.
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const botResponse = result.candidates[0].content.parts[0].text;
+                        addMessage(botResponse, 'bot'); // Adds the AI's response to the chat.
+                        chatHistory.push({ role: "model", parts: [{ text: botResponse }] }); // Stores for context.
+                    } else {
+                        addMessage("I'm sorry, I couldn't generate a response. Please try again.", 'bot');
+                        console.error("LLM response structure unexpected:", result);
+                    }
+                } catch (error) {
+                    showTypingIndicator(false); // Ensures indicator is hidden on error.
+                    addMessage(`Error: ${error.message}. Please try again.`, 'bot');
+                    console.error("Error calling Gemini API for chatbot:", error);
+                }
+            }
+
+            // Event listeners for chatbot UI interactions.
+            chatbotFab.addEventListener('click', () => {
+                chatbotWindow.classList.toggle('open'); // Toggles chatbot window visibility.
+                if (chatbotWindow.classList.contains('open')) {
+                    chatbotInput.focus(); // Focuses input when opened.
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Scrolls to bottom.
+                }
+            });
+
+            chatbotCloseBtn.addEventListener('click', () => {
+                chatbotWindow.classList.remove('open'); // Closes chatbot window.
+            });
+
+            chatbotSendBtn.addEventListener('click', () => {
+                const userMessage = chatbotInput.value.trim();
+                if (userMessage) {
+                    addMessage(userMessage, 'user'); // Adds user message to chat.
+                    chatbotInput.value = ''; // Clears input field.
+                    sendMessageToLLM(userMessage); // Sends message to AI.
+                }
+            });
+
+            chatbotInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    chatbotSendBtn.click(); // Sends message on Enter key press.
+                }
+            });
+
+            // Mini-demo: Grocery Stock Manager logic.
+            const groceryItems = {}; // Stores grocery items and quantities.
+            const groceryItemInput = document.getElementById('grocery-item-input');
+            const groceryQuantityInput = document.getElementById('grocery-quantity-input');
+            const addItemBtn = document.getElementById('add-item-btn');
+            const checkStockBtn = document.getElementById('check-stock-btn');
+            const groceryOutput = document.getElementById('grocery-output');
+
+            // Adds an item to stock.
+            addItemBtn.addEventListener('click', () => {
+                const item = groceryItemInput.value.trim();
+                const quantity = parseInt(groceryQuantityInput.value, 10);
+                if (item && !isNaN(quantity) && quantity > 0) {
+                    groceryItems[item] = (groceryItems[item] || 0) + quantity;
+                    groceryOutput.textContent = `Added ${quantity} of ${item}. Current stock: ${groceryItems[item]}`;
+                    groceryItemInput.value = '';
+                    groceryQuantityInput.value = '';
                 } else {
-                    content.style.maxHeight = "0";
+                    groceryOutput.textContent = "Please enter a valid item name and quantity.";
+                }
+            });
+
+            // Checks stock for a specific item.
+            checkStockBtn.addEventListener('click', () => {
+                const item = groceryItemInput.value.trim();
+                if (item) {
+                    if (groceryItems[item] !== undefined) {
+                        groceryOutput.textContent = `Stock for ${item}: ${groceryItems[item]}`;
+                    } else {
+                        groceryOutput.textContent = `${item} is not in stock.`;
+                    }
+                    groceryItemInput.value = '';
+                } else {
+                    groceryOutput.textContent = "Please enter an item name to check stock.";
+                }
+            });
+
+            // Mini-demo: Fun Fact Generator logic.
+            const generateFunFactBtn = document.getElementById('generate-fun-fact-btn');
+            const funFactOutput = document.getElementById('fun-fact-output');
+
+            // Generates a fun fact using an external AI model.
+            generateFunFactBtn.addEventListener('click', async () => {
+                funFactOutput.textContent = "Generating a fun fact...";
+                funFactOutput.classList.add('loading');
+                const prompt = "Generate a single, interesting, and concise fun fact about any general topic (science, history, animals, etc.).";
+                const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }], };
+                const apiKey = ""; // API key is handled by the platform.
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+                    }
+                    const result = await response.json();
+                    funFactOutput.classList.remove('loading');
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        funFactOutput.textContent = result.candidates[0].content.parts[0].text;
+                    } else {
+                        funFactOutput.textContent = "Could not generate a fun fact. Try again!";
+                        console.error("LLM response structure unexpected:", result);
+                    }
+                } catch (error) {
+                    funFactOutput.classList.remove('loading');
+                    funFactOutput.textContent = `Error: ${error.message}. Please try again.`;
+                    console.error("Error calling Gemini API for fun fact:", error);
                 }
             });
         });
-
-        // RGB Toggle Logic: Toggles rainbow text on/off for name and typewriter effect.
-        rgbToggle.addEventListener('change', () => {
-            headerName.classList.toggle('static-color', !rgbToggle.checked);
-            document.querySelectorAll('.typed-letter').forEach(letter => {
-                letter.classList.toggle('static-color', !rgbToggle.checked);
-            });
-            // Update the animation for the GPA and Credits progress circles
-            // No direct impact on rainbow, but good to check if other animations are toggled
-        });
-
-        // Chatbot Functionality: Handles opening/closing the chatbot and sending messages.
-        chatbotFab.addEventListener('click', () => {
-            chatbotWindow.classList.toggle('open');
-            if (chatbotWindow.classList.contains('open')) {
-                // Scroll to bottom when opening
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-            }
-        });
-
-        closeChatbotBtn.addEventListener('click', () => {
-            chatbotWindow.classList.remove('open');
-        });
-
-        // Send message function for chatbot
-        function sendMessage() {
-            const userInputText = chatbotUserInput.value.trim();
-            if (userInputText !== '') {
-                // Add user message to chat
-                addMessage(userInputText, 'user');
-                chatbotUserInput.value = ''; // Clear input
-
-                // Simulate bot typing
-                const typingIndicator = addTypingIndicator();
-
-                // Simulate bot response after a delay
-                setTimeout(() => {
-                    removeTypingIndicator(typingIndicator);
-                    const botResponse = getBotResponse(userInputText);
-                    addMessage(botResponse, 'bot');
-                }, 1500); // Simulate network delay
-            }
-        }
-
-        // Add message to chat display
-        function addMessage(text, sender) {
-            const messageContainer = document.createElement('div');
-            messageContainer.classList.add('chatbot-message-container', sender);
-
-            if (sender === 'bot') {
-                const profilePic = document.createElement('img');
-                profilePic.src = "https://via.placeholder.com/48x48?text=LW"; // Stock profile pic for bot
-                profilePic.alt = "Lawrence's profile picture";
-                profilePic.classList.add('chatbot-profile-pic');
-                messageContainer.appendChild(profilePic);
-            }
-
-            const messageBubble = document.createElement('div');
-            messageBubble.classList.add('chatbot-message');
-            messageBubble.textContent = text;
-            messageContainer.appendChild(messageBubble);
-
-            chatbotMessages.appendChild(messageContainer);
-            chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Scroll to bottom
-        }
-
-        // Add typing indicator
-        function addTypingIndicator() {
-            const typingDiv = document.createElement('div');
-            typingDiv.classList.add('chatbot-typing-indicator');
-            typingDiv.innerHTML = '<span>.</span><span>.</span><span>.</span>';
-            chatbotMessages.appendChild(typingDiv);
-            chatbotMessages.scrollTop = chatbotMessages.scrollHeight; // Scroll to bottom
-            return typingDiv;
-        }
-
-        // Remove typing indicator
-        function removeTypingIndicator(indicator) {
-            if (indicator && indicator.parentNode) {
-                indicator.parentNode.removeChild(indicator);
-            }
-        }
-
-
-        // Simple chatbot response logic
-        function getBotResponse(input) {
-            input = input.toLowerCase();
-            if (input.includes('hello') || input.includes('hi')) {
-                return "Hello there! How can I assist you with Lawrence's resume today?";
-            } else if (input.includes('skills')) {
-                return "Lawrence is proficient in HTML/CSS/JavaScript, React.js, Python, PHP, SQL, MySQL, MongoDB, AWS, Node.js, and more!";
-            } else if (input.includes('experience')) {
-                return "Lawrence has experience as a Freelance Web Developer and is eager for new opportunities.";
-            } else if (input.includes('education')) {
-                return "Lawrence is pursuing a Bachelor of Science in Software Development from the University of Maine at Augusta, expected May 2026. Current GPA is 3.7/4.0.";
-            } else if (input.includes('projects')) {
-                return "Lawrence has worked on an Interactive Resume (this one!), an E-commerce Platform Backend, and a Personal Portfolio Website.";
-            } else if (input.includes('contact') || input.includes('reach out')) {
-                return "You can contact Lawrence via email at Lawrence.Langelier.Jr@gmail.com or by phone at (207)-877-6238.";
-            } else if (input.includes('hobbies') || input.includes('interests')) {
-                return "Lawrence enjoys learning new technologies, building personal projects, and staying active. What else would you like to know?";
-            } else if (input.includes('family')) {
-                return "While Lawrence keeps his family life private, he values work-life balance and enjoys spending time with loved ones.";
-            }
-            else {
-                return "I'm sorry, I don't have information on that specific topic yet. Please ask about Lawrence's skills, experience, education, or projects!";
-            }
-        }
-
-        chatbotSendBtn.addEventListener('click', sendMessage);
-        chatbotUserInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
-        // Copy to clipboard function
-        function copyToClipboard(elementId, button) {
-            const element = document.getElementById(elementId);
-            const textToCopy = element.textContent;
-
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
     </script>
 </body>
 </html>
-```
